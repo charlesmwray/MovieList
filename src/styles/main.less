@@ -7,6 +7,27 @@ input {
     width: 100%;
 }
 
+.movie-list .movie-list-item a {
+    display: flex;
+    flex-direction: row;
+    .metadata-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        .title {
+            font-size: 2rem;
+        }
+        .movie-poster {
+            display: inline-block;
+            margin-right: 2rem;
+            height: 9rem;
+            img {
+                height: 100%;
+            }
+        }
+    }
+}
+
 .search-result {
     display: inline-block;
     padding: 10px 15px;
