@@ -4,18 +4,14 @@ const MovieSearch = (props) => {
         props.setQueryString(e.target.value);
     }
     return (
-      <div>
-        <h2>Search</h2>
-        <div className="row">
-            <div className="col-xs-12 col-sm-4">
-                <input type="text" id="imdb-link" onKeyUp={e => setQueryString(e)}/>
+        <div className="search-container">
+            <div className="search-input-container">
+                <label className="label" for="search-input">Search for movie</label>
+                <input className="search-input" type="text" id="search-input" onKeyUp={e => setQueryString(e)}/>
+                <button onClick={props.searchForMovie}>Search</button>
             </div>
-            <div className="col-xs-12 col-sm-4">
-                <button onClick={props.searchForMovie} className="col-xs-12 col-sm-4">Search</button>
-            </div>
+            <h5>{props.status}ko</h5>
         </div>
-        <h3>{props.status}</h3>
-      </div>
     )
 }
 export default MovieSearch;

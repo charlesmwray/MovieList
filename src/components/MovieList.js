@@ -16,13 +16,10 @@ const MovieList = (props) => {
             </li>
         )
     });
-    return (
-        <div>
-            <h2>Movie List</h2>
-            <ul className="list-group movie-list">
-                {movieItems}
-            </ul>
-        </div>
+    return (    
+        <ul className="list-group movie-list">
+            {movieItems}
+        </ul>
     )
 }
 

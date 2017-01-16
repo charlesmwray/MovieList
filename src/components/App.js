@@ -52,11 +52,10 @@ class App extends Component {
 
           setMovies(formattedMovies);
 
-          console.log('Read successful', formattedMovies);
 
         }, function (errorObject) {
-
-          console.log("The read failed: " + errorObject.code);
+            // TODO: add error state to UI
+            console.log("The read failed: " + errorObject.code);
 
         });
 
@@ -148,25 +147,29 @@ class App extends Component {
     }
     render() {
         return (
-          <div className="row">
-              <div className="col-xs-12">
-                  <MovieList movies={this.state.movies} />
-                  <MovieSearch
-                      status={this.state.queryState}
-                      query={this.state.query}
-                      searchForMovie={this.searchForMovie.bind(this)}
-                      setQueryString={this.setQueryString.bind(this)}
-                      />
-                   {
-                       this.state.showSerchResult &&
-                       <MovieSearchResult
-                          title={this.state.searchResult.title}
-                          year={this.state.searchResult.year}
-                          addMovie={this.addMovie.bind(this)}
-                          />
+            <div className="row">
+                <div className="col-xs-12">
+                    <header className="header">
+                        <h1 className="header-text">Movie List</h1>
+                        <MovieSearch
+                            status={this.state.queryState}
+                            query={this.state.query}
+                            searchForMovie={this.searchForMovie.bind(this)}
+                            setQueryString={this.setQueryString.bind(this)}
+                            />
+                    </header>
+
+                    {
+                        this.state.showSerchResult &&
+                        <MovieSearchResult
+                            title={this.state.searchResult.title}
+                            year={this.state.searchResult.year}
+                            addMovie={this.addMovie.bind(this)}
+                            />
                     }
-              </div>
-          </div>
+                    <MovieList movies={this.state.movies} />
+                </div>
+            </div>
         )
     }
 

@@ -3,8 +3,31 @@ body {
 }
 h1, h2, h3, h4, h5, h6 { color: gold; }
 
-input {
-    width: 100%;
+.header {
+    display: flex;
+    .header-text {
+        flex-grow: 1;
+    }
+    .search-container {
+        padding: 1rem 0;
+
+        .search-input-container {
+            display: flex;
+            .search-input {
+                margin-right: 1rem;
+            }
+            > .label {
+                position: absolute;
+                left: -100vw;
+                width: 1px;
+                height: 1px;
+            }
+        }
+    }
+}
+
+.search-result {
+    margin: 1rem 0;
 }
 
 .movie-list .movie-list-item a {
