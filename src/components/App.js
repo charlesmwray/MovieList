@@ -121,6 +121,14 @@ class App extends Component {
         });
 
     }
+    resetSearch() {
+        this.setState({
+            query: '',
+            queryState: '',
+            showSerchResult: false,
+            searchResult: {},
+        })
+    }
     addMovie() {
         const data = new Firebase('https://sweltering-fire-733.firebaseio.com/movies/');
         const setQueryState = (str) => {
@@ -129,12 +137,7 @@ class App extends Component {
             });
         }
         const resetSearch = () => {
-            this.setState({
-                query: '',
-                queryState: '',
-                showSerchResult: false,
-                searchResult: {},
-            })
+            this.resetSearch();
         }
         const saveData = this.state.searchResult;
         data.push(saveData, function(error) {
@@ -168,6 +171,7 @@ class App extends Component {
                             title={this.state.searchResult.title}
                             year={this.state.searchResult.year}
                             addMovie={this.addMovie.bind(this)}
+                            resetSearch={this.resetSearch.bind(this)}
                             />
                     }
                     <MovieList movies={this.state.movies} />

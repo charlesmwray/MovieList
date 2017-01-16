@@ -3,16 +3,15 @@ const MovieSearchResult = (props) => {
         props.setQueryString(e.target.value);
     }
     return (
-        <div>
-            <div className="search-result">
-                <span className="title">
-                    {props.title}
-                </span>
-                <span className="year">
-                    {props.year}
-                </span>
-            </div>
+        <div className="search-result">
+            <span className="title">
+                {props.title}
+            </span>
+            <span className="year">
+                {props.year}
+            </span>
             <button onClick={props.addMovie} id="add-movie-button">+</button>
+            <button onClick={props.resetSearch}>Cancel</button>
         </div>
     )
 }
