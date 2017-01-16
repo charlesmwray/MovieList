@@ -4,9 +4,12 @@ const MovieList = (props) => {
             <li className="list-group-item movie-list-item" key={i}>
                 <a href={movie.link}>
                     <div className="metadata-wrapper">
-                        <div className="movie-poster">
-                            <img src={movie.poster} />
-                        </div>
+                        {
+                            movie.poster &&
+                            <div className="movie-poster">
+                                <img src={movie.poster} />
+                            </div>
+                        }
                         <span className="title">{movie.title}</span>
                     </div>
                     <div className="rating-wrapper">
@@ -16,7 +19,7 @@ const MovieList = (props) => {
             </li>
         )
     });
-    return (    
+    return (
         <ul className="list-group movie-list">
             {movieItems}
         </ul>

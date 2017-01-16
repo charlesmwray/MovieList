@@ -39,7 +39,7 @@ class App extends Component {
             var rating = snapshot.val()[keys[i]].rating;
             var title = snapshot.val()[keys[i]].title;
             var id = snapshot.val()[keys[i]].id;
-            var poster = snapshot.val()[keys[i]].poster;
+            var poster = snapshot.val()[keys[i]].poster === 'N/A' ? null : snapshot.val()[keys[i]].poster;
 
             formattedMovies.push({
                 link:link,
