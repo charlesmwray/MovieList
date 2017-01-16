@@ -10,7 +10,7 @@ const MovieSearch = (props) => {
                 <input className="search-input" type="text" id="search-input" onKeyUp={e => setQueryString(e)}/>
                 <button onClick={props.searchForMovie}>Search</button>
             </div>
-            <h5>{props.status}ko</h5>
+            <h5>{props.status}</h5>
         </div>
     )
 }
