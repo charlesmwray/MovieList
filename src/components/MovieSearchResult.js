@@ -12,7 +12,7 @@ const MovieSearchResult = (props) => {
                     {props.year}
                 </span>
             </div>
-            <button onClick={props.addMovie}>+</button>
+            <button onClick={props.addMovie} id="add-movie-button">+</button>
         </div>
     )
 }

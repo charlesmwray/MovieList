@@ -3,13 +3,16 @@ const MovieSearch = (props) => {
     const setQueryString = function(e) {
         props.setQueryString(e.target.value);
     }
+    const searchForMovie = function(e) {
+        props.searchForMovie(e);
+    }
     return (
         <div className="search-container">
-            <div className="search-input-container">
-                <label className="label" for="search-input">Search for movie</label>
+            <form className="search-input-container" onSubmit={e => searchForMovie(e)}>
+                <label className="label" htmlFor="search-input">Search for movie</label>
                 <input className="search-input" type="text" id="search-input" onKeyUp={e => setQueryString(e)}/>
-                <button onClick={props.searchForMovie}>Search</button>
-            </div>
+                <button type="submit">Search</button>
+            </form>
             <h5>{props.status}</h5>
         </div>
     )

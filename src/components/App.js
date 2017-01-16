@@ -65,7 +65,9 @@ class App extends Component {
             query: str
         })
     }
-    searchForMovie() {
+    searchForMovie(e) {
+        e.preventDefault();
+
         var query = 'https://www.omdbapi.com/?t=' + this.state.query;
 
         this.setState({
@@ -83,6 +85,7 @@ class App extends Component {
                 searchResult: obj,
                 showSerchResult: true
             });
+            document.getElementById('add-movie-button').focus();
         }
 
         $.ajax(query).done(function(p_oXHR, p_sStatus) {
