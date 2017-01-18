@@ -12,10 +12,22 @@ h1, h2, h3, h4, h5, h6 { color: gold; }
     }
 }
 
+h1.header-text {
+    font-family: 'Contrail One', cursive;
+    font-size: 7rem;
+}
+
 .header {
     display: flex;
+
+    @media (min-width: 768px) {
+        justify-content: flex-end;
+    }
     .header-text {
         flex-grow: 1;
+        @media (min-width: 768px) {
+            display: none;
+        }
     }
     .search-container {
         padding: 1rem 0;

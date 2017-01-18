@@ -155,9 +155,15 @@ class App extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-xs-12">
+                <div className="col-sm-3 hidden-xs">
+                    <h1 className="header-text">
+                        Movie <br/>
+                        List
+                    </h1>
+                </div>
+                <div className="col-xs-12 col-sm-9">
                     <header className="header">
-                        <h1 className="header-text">Movie List</h1>
+                        <h1 className="header-text visible-xs-*">Movie List</h1>
                         <MovieSearch
                             status={this.state.queryState}
                             query={this.state.query}
