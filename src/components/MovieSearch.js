@@ -9,7 +9,7 @@ const MovieSearch = (props) => {
     return (
         <div className="search-container">
             <form className="search-input-container" onSubmit={e => searchForMovie(e)}>
-                <label className="label" htmlFor="search-input">Search for movie</label>
+                <label className="util accessible-text" htmlFor="search-input">Search for movie</label>
                 <input className="search-input" type="text" id="search-input" onKeyUp={e => setQueryString(e)}/>
                 <button type="submit">Search</button>
             </form>
