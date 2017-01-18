@@ -6,6 +6,8 @@ import MovieList from './MovieList.js';
 import MovieSearch from './MovieSearch.js';
 import MovieSearchResult from './MovieSearchResult';
 
+const data = new Firebase('https://sweltering-fire-733.firebaseio.com/movies/');
+
 class App extends Component {
 
     constructor(props) {
@@ -22,7 +24,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const data = new Firebase('https://sweltering-fire-733.firebaseio.com/movies/');
 
         const setMovies = (arr) => {
             this.setState({
@@ -46,12 +47,13 @@ class App extends Component {
                 rating:rating,
                 title:title,
                 id:id,
-                poster:poster
+                poster:poster,
+                dbId:keys[i]
             });
+
           }
 
           setMovies(formattedMovies);
-
 
         }, function (errorObject) {
             // TODO: add error state to UI
@@ -130,7 +132,6 @@ class App extends Component {
         })
     }
     addMovie() {
-        const data = new Firebase('https://sweltering-fire-733.firebaseio.com/movies/');
         const setQueryState = (str) => {
             this.setState({
                 queryState: str
@@ -164,7 +165,6 @@ class App extends Component {
                             setQueryString={this.setQueryString.bind(this)}
                             />
                     </header>
-
                     {
                         this.state.showSerchResult &&
                         <MovieSearchResult

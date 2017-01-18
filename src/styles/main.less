@@ -33,9 +33,8 @@ h1, h2, h3, h4, h5, h6 { color: gold; }
     margin: 1rem 0;
 }
 
-.movie-list .movie-list-item a {
+.movie-list .movie-list-item {
     display: flex;
-    flex-direction: row;
     .metadata-wrapper {
         display: flex;
         flex-direction: row;
@@ -50,6 +49,13 @@ h1, h2, h3, h4, h5, h6 { color: gold; }
             img {
                 height: 100%;
             }
+        }
+    }
+    .action-wrapper {
+        text-align: right;
+
+        .remove.button {
+            margin-top: 1rem;
         }
     }
 }
