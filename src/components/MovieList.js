@@ -19,7 +19,7 @@ const MovieList = (props) => {
                 </a>
                 <div className="action-wrapper">
                     <span className="badge">Rating: {movie.rating}</span><br />
-                    <button className="remove button" onClick={() => { removeMovie(movie.dbId) }}>Remove</button>
+                    <button className="remove button btn" onClick={() => { removeMovie(movie.dbId) }}>Remove</button>
                 </div>
             </li>
         )

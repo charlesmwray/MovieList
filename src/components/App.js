@@ -95,7 +95,6 @@ class App extends Component {
 
             if (result.Response === "True") {
 
-                // var resultBody = result.Title + ' ' + result.Year + ' <button onclick=addMovie("' + result.imdbID + '")>+</button>';
                 setQueryState('Search complete');
 
                 var saveData = {
