@@ -1,5 +1,6 @@
 body {
     background-color: rgba(5,0,5,.93);
+    font-family: 'Roboto', sans-serif;
 }
 h1, h2, h3, h4, h5, h6 { color: gold; }
 
@@ -47,12 +48,17 @@ h1.header-text {
 
 .movie-list .movie-list-item {
     display: flex;
+    a.metadata-wrapper, a.metadata-wrapper:visited, a.metadata-wrapper:hover {
+        color: #485fde;
+        font-family: 'Contrail One', cursive;
+    }
     .metadata-wrapper {
         display: flex;
         flex-direction: row;
         flex-grow: 1;
+
         .title {
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
         .movie-poster {
             display: inline-block;
