@@ -18,7 +18,8 @@ const MovieList = (props) => {
                     <span className="title">{movie.title}</span>
                 </a>
                 <div className="action-wrapper">
-                    <span className="badge">Rating: {movie.rating}</span><br />
+                    <span className="badge">Rating: {movie.rating}</span>
+                    { movie.watched && <span className="badge watched">Watched</span> }
                     <button className="remove button btn" onClick={() => { removeMovie(movie.dbId) }}>Remove</button>
                 </div>
             </li>

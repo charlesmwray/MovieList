@@ -71,8 +71,15 @@ h1.header-text {
         }
     }
     .action-wrapper {
+        display: flex;
+        flex-direction: column;
         text-align: right;
-
+        >.badge {
+            margin: .25rem;
+        }
+        .watched.badge {
+            background-color: #168700;
+        }
         .remove.button {
             margin-top: 1rem;
         }

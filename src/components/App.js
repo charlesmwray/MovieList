@@ -41,6 +41,7 @@ class App extends Component {
             var title = snapshot.val()[keys[i]].title;
             var id = snapshot.val()[keys[i]].id;
             var poster = snapshot.val()[keys[i]].poster === 'N/A' ? null : snapshot.val()[keys[i]].poster;
+            var watched = snapshot.val()[keys[i]].watched;
 
             formattedMovies.push({
                 link:link,
@@ -48,7 +49,8 @@ class App extends Component {
                 title:title,
                 id:id,
                 poster:poster,
-                dbId:keys[i]
+                dbId:keys[i],
+                watched:watched
             });
 
           }
