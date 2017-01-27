@@ -49,25 +49,32 @@ h1.header-text {
 
 .movie-list .movie-list-item {
     display: flex;
-    a.metadata-wrapper, a.metadata-wrapper:visited, a.metadata-wrapper:hover {
-        color: #485fde;
-        font-family: 'Contrail One', cursive;
+    .poster {
+        display: inline-block;
+        margin-right: 2rem;
+        text-align: center;
+
+        img {
+            height: 9rem;
+        }
+        .year {
+            margin-top: .5rem;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
     }
     .metadata-wrapper {
-        display: flex;
-        flex-direction: row;
         flex-grow: 1;
-
-        .title {
+        a.title,
+        a.title:hover,
+        a.title:active {
             font-size: 2.5rem;
+            color: #485fde;
+            font-family: 'Contrail One', sans-serif;
+            text-decoration: none;
         }
-        .movie-poster {
-            display: inline-block;
-            margin-right: 2rem;
-            height: 9rem;
-            img {
-                height: 100%;
-            }
+        .notes {
+            font-size: 1rem;
         }
     }
     .action-wrapper {

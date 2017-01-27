@@ -36,23 +36,17 @@ class App extends Component {
           var formattedMovies = [];
 
           for (var i = 0; i < keys.length; i++) {
-            var link = snapshot.val()[keys[i]].url;
-            var rating = snapshot.val()[keys[i]].rating;
-            var title = snapshot.val()[keys[i]].title;
-            var id = snapshot.val()[keys[i]].id;
-            var poster = snapshot.val()[keys[i]].poster === 'N/A' ? null : snapshot.val()[keys[i]].poster;
-            var watched = snapshot.val()[keys[i]].watched;
-
             formattedMovies.push({
-                link:link,
-                rating:rating,
-                title:title,
-                id:id,
-                poster:poster,
-                dbId:keys[i],
-                watched:watched
+                link:    snapshot.val()[keys[i]].url,
+                rating:  snapshot.val()[keys[i]].rating,
+                title:   snapshot.val()[keys[i]].title,
+                id:      snapshot.val()[keys[i]].id,
+                poster:  snapshot.val()[keys[i]].poster === 'N/A' ? null : snapshot.val()[keys[i]].poster,
+                dbId:    keys[i],
+                watched: snapshot.val()[keys[i]].watched,
+                notes:   snapshot.val()[keys[i]].notes,
+                year:    snapshot.val()[keys[i]].year
             });
-
           }
 
           setMovies(formattedMovies);
@@ -93,6 +87,7 @@ class App extends Component {
         }
 
         $.ajax(query).done(function(p_oXHR, p_sStatus) {
+
             var result = p_oXHR;
 
             if (result.Response === "True") {
@@ -106,9 +101,9 @@ class App extends Component {
                     watched: false,
                     url: 'http://www.imdb.com/title/' + result.imdbID,
                     poster: result.Poster,
-                    year: result.Year
+                    year: result.Year,
+                    notes: ''
                 }
-
                 setSearchResult(saveData);
 
             } else {
