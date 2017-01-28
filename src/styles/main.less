@@ -21,16 +21,20 @@ h1.header-text {
 
 .header {
     display: flex;
+    flex-direction: column;
 
     @media (min-width: 768px) {
         justify-content: flex-end;
+        flex-direction: row;
     }
+
     .header-text {
         flex-grow: 1;
         @media (min-width: 768px) {
             display: none;
         }
     }
+
     .search-container {
         padding: 1rem 0;
 
