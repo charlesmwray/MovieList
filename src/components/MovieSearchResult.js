@@ -14,12 +14,12 @@ const MovieSearchResult = (props) => {
                 <button
                     onClick={props.addMovie}
                     id="add-movie-button"
-                    aria-labeledby="add-search-result-label"
+                    aria-labelledby="add-search-result-label"
                     className="btn"
                 >+</button>
                 <button
                     onClick={props.resetSearch}
-                    aria-labeledby="cancel-search-result-label"
+                    aria-labelledby="cancel-search-result-label"
                     className="btn"
                 >Cancel</button>
             </div>

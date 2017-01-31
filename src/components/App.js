@@ -49,7 +49,7 @@ class App extends Component {
             });
           }
 
-          setMovies(formattedMovies);
+          setMovies(formattedMovies.reverse());
 
         }, function (errorObject) {
             // TODO: add error state to UI
