@@ -94,16 +94,17 @@ class App extends Component {
 
                 setQueryState('Search complete');
 
-                var saveData = {
-                    id: result.imdbID,
-                    title: result.Title,
-                    rating: 0,
-                    watched: false,
-                    url: 'http://www.imdb.com/title/' + result.imdbID,
-                    poster: result.Poster,
-                    year: result.Year,
-                    notes: ''
-                }
+                var saveData = result;
+
+                saveData.id = result.imdbID,
+                saveData.title = result.Title,
+                saveData.rating = 0,
+                saveData.watched = false,
+                saveData.url = 'http://www.imdb.com/title/' + result.imdbID,
+                saveData.poster = result.Poster,
+                saveData.year = result.Year,
+                saveData.notes = '';
+
                 setSearchResult(saveData);
 
             } else {
@@ -125,7 +126,8 @@ class App extends Component {
             queryState: '',
             showSerchResult: false,
             searchResult: {},
-        })
+        });
+        document.getElementById('search-input').value = '';
     }
     addMovie() {
         const setQueryState = (str) => {
@@ -140,9 +142,7 @@ class App extends Component {
         data.push(saveData, function(error) {
             if (!error) {
                 setQueryState('Saved');
-                setTimeout(function(){
-                    resetSearch();
-                }, 3000);
+                resetSearch();
             } else {
                 setQueryState('Save error.');
             }
