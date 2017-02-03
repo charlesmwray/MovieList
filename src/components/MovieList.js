@@ -1,10 +1,13 @@
-const data = new Firebase('https://sweltering-fire-733.firebaseio.com/movies/');
-const removeMovie = (id) => {
-    console.log(id);
-    data.child(id).remove();
+import data from '../data/firebase';
+const removeMovie = (id, title) => {
+    if (confirm("Remove " + title + "?") == true) {
+         data.child(id).remove();
+    }
 }
 const MovieList = (props) => {
-    const filter = props.filter;
+    const toggleEditForm = function(movie) {
+        props.toggleEditForm(movie);
+    }
     const movieItems = props.movies.map( (movie, i) => {
         return (
             <li className="list-group-item movie-list-item" key={i}>
@@ -22,9 +25,11 @@ const MovieList = (props) => {
                     <div className="notes">{movie.notes}</div>
                 </div>
                 <div className="action-wrapper">
-                    <span className="badge">Rating: {movie.rating}</span>
-                    { movie.watched && <span className="badge watched">Watched</span> }
-                    <button className="remove button btn" onClick={() => { removeMovie(movie.dbId) }}>Remove</button>
+                    Rating: {movie.rating} { movie.watched && <span className="watched">Watched</span> }
+                    <div className="button-group">
+                        <button className="btn" onClick={() => { toggleEditForm(movie) }}>Edit</button>
+                        <button className="remove button btn" onClick={() => { removeMovie(movie.dbId, movie.title) }}>X</button>
+                    </div>
                 </div>
             </li>
         )

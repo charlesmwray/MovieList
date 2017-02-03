@@ -1,5 +1,4 @@
 const MovieSearch = (props) => {
-    /* TODO: reset input value after search */
     const setQueryString = function(e) {
         props.setQueryString(e.target.value);
     }

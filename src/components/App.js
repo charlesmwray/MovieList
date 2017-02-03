@@ -5,8 +5,9 @@ import { version } from '../../package.json';
 import MovieList from './MovieList.js';
 import MovieSearch from './MovieSearch.js';
 import MovieSearchResult from './MovieSearchResult';
+import MovieEdit from './MovieEdit';
 
-const data = new Firebase('https://sweltering-fire-733.firebaseio.com/movies/');
+import data from '../data/firebase';
 
 class App extends Component {
 
@@ -19,6 +20,11 @@ class App extends Component {
             queryState: '',
             showSerchResult: false,
             searchResult: {},
+            editForm: {
+                show: false,
+                id: null,
+                movie: {}
+            }
         }
 
     }
@@ -148,35 +154,47 @@ class App extends Component {
             }
         });
     }
+    toggleEditForm(movie) {
+        console.log(movie);
+        this.setState({
+            editForm: {
+                show: !this.state.editForm.show,
+                movie: movie
+            }
+        })
+    }
     render() {
         return (
-            <div className="row">
-                <div className="col-sm-3 hidden-xs">
-                    <h1 className="header-text">
-                        Movie <br/>
-                        List
-                    </h1>
-                </div>
-                <div className="col-xs-12 col-sm-9">
-                    <header className="header">
-                        <h1 className="header-text visible-xs-*">Movie List</h1>
-                        <MovieSearch
-                            status={this.state.queryState}
-                            query={this.state.query}
-                            searchForMovie={this.searchForMovie.bind(this)}
-                            setQueryString={this.setQueryString.bind(this)}
-                            />
-                    </header>
-                    {
-                        this.state.showSerchResult &&
-                        <MovieSearchResult
-                            title={this.state.searchResult.title}
-                            year={this.state.searchResult.year}
-                            addMovie={this.addMovie.bind(this)}
-                            resetSearch={this.resetSearch.bind(this)}
-                            />
-                    }
-                    <MovieList movies={this.state.movies} />
+            <div>
+                { this.state.editForm.show && <MovieEdit details={this.state.editForm} toggleEditForm={this.toggleEditForm.bind(this)} /> }
+                <div className="row">
+                    <div className="col-sm-3 hidden-xs">
+                        <h1 className="header-text">
+                            Movie <br/>
+                            List
+                        </h1>
+                    </div>
+                    <div className="col-xs-12 col-sm-9">
+                        <header className="header">
+                            <h1 className="header-text visible-xs-*">Movie List</h1>
+                            <MovieSearch
+                                status={this.state.queryState}
+                                query={this.state.query}
+                                searchForMovie={this.searchForMovie.bind(this)}
+                                setQueryString={this.setQueryString.bind(this)}
+                                />
+                        </header>
+                        {
+                            this.state.showSerchResult &&
+                            <MovieSearchResult
+                                title={this.state.searchResult.title}
+                                year={this.state.searchResult.year}
+                                addMovie={this.addMovie.bind(this)}
+                                resetSearch={this.resetSearch.bind(this)}
+                                />
+                        }
+                        <MovieList movies={this.state.movies} toggleEditForm={this.toggleEditForm.bind(this)} />
+                    </div>
                 </div>
             </div>
         )
