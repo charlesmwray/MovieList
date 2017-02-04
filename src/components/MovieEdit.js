@@ -13,6 +13,10 @@ class MovieEdit extends Component {
         }
 
     }
+    toggleEditForm(e) {
+        e.preventDefault();
+        this.state.toggleEditForm();
+    }
     saveChanges(e, movie) {
         e.preventDefault();
         data.child(movie.dbId).child('rating').set(e.target.rating.value);
@@ -32,7 +36,6 @@ class MovieEdit extends Component {
                                 Rating: {this.state.rating}
                             </span>
                             <input id="rating" className="range-input visible-xs" type="text" min="0" max="100" defaultValue={this.state.rating} />
-                            <input id="rating" className="range-input hidden-xs" type="range" min="0" max="100" defaultValue={this.state.rating} />
                         </div>
                         <div className="form-field">
                             <label className="form-label" htmlFor="notes">Notes:</label>
@@ -42,7 +45,7 @@ class MovieEdit extends Component {
                             <label htmlFor="watched">Watched</label>
                             <input type="checkbox" id="watched" className="rating-checkbox" defaultChecked={this.state.watched} />
                             <button className="pull-right" type="submit">Save</button>
-                            <button className="pull-right" onClick={(e) => { this.state.toggleEditForm(e) }}>Cancel</button>
+                            <button className="pull-right" onClick={(e) => { this.toggleEditForm(e) }}>Cancel</button>
                         </div>
                     </div>
                 </form>

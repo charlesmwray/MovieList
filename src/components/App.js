@@ -155,7 +155,6 @@ class App extends Component {
         });
     }
     toggleEditForm(movie) {
-        console.log(movie);
         this.setState({
             editForm: {
                 show: !this.state.editForm.show,
