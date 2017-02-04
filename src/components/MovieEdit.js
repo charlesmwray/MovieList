@@ -31,7 +31,8 @@ class MovieEdit extends Component {
                             <span className="form-label">
                                 Rating: {this.state.rating}
                             </span>
-                            <input id="rating" className="range-input" type="range" min="0" max="100" defaultValue={this.state.rating} />
+                            <input id="rating" className="range-input visible-xs" type="text" min="0" max="100" defaultValue={this.state.rating} />
+                            <input id="rating" className="range-input hidden-xs" type="range" min="0" max="100" defaultValue={this.state.rating} />
                         </div>
                         <div className="form-field">
                             <label className="form-label" htmlFor="notes">Notes:</label>
