@@ -22,6 +22,8 @@ class MovieEdit extends Component {
         data.child(movie.dbId).child('rating').set(e.target.rating.value);
         data.child(movie.dbId).child('notes').set(e.target.notes.value);
         data.child(movie.dbId).child('watched').set(e.target.watched.checked);
+
+        this.state.toggleEditForm();
     }
     render() {
         return (
