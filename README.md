@@ -1,6 +1,8 @@
 # Movie List
 This is a single page app to track movies I want to watch, have watched and will watch. It will serve as a way to aggregate data on each movie.
 
+Live [demo](http://ec2-54-203-0-121.us-west-2.compute.amazonaws.com:3000/?)
+
 Built with [React](https://facebook.github.io/react/)
 
 __Install the dependencies:__
