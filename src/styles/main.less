@@ -38,9 +38,14 @@ h1.header-text {
 
     .search-container {
         padding: 1rem 0;
+        text-align: right;
+        @media (min-width: 768px) {
+            max-width: 50%;
+        }
 
         .search-input-container {
             display: flex;
+            justify-content: flex-end;
             .search-input {
                 margin-right: 1rem;
             }

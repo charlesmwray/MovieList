@@ -119,10 +119,8 @@ class App extends Component {
 
             }
 
-        }).fail(function() {
-
-            setQueryState('Error. Please try again.');
-
+        }).fail(function(p_oXHR, p_sStatus) {
+            setQueryState(['Error. Please try again. Movie search may be down. See ',<a href="http://omdbapi.com">OMDb API</a>,' for more info.']);
         });
 
     }
