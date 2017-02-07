@@ -120,7 +120,14 @@ class App extends Component {
             }
 
         }).fail(function(p_oXHR, p_sStatus) {
-            setQueryState(['Error. Please try again. Movie search may be down. See ',<a href="http://omdbapi.com">OMDb API</a>,' for more info.']);
+            const errorMessage = (
+                <div>
+                    Error. Please try again.<br/>
+                    Movie search may be down.<br />
+                See <a href="http://omdbapi.com" target="_blank">OMDb API</a> for more info.
+                </div>
+            )
+            setQueryState(errorMessage);
         });
 
     }
