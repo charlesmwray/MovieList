@@ -45,15 +45,15 @@ class App extends Component {
 
             for (var i = 0; i < keys.length; i++) {
                 formattedMovies.push({
-                    link:    'http://www.imdb.com/title/' + snapshot.val()[keys[i]].imdb,
+                    link:      'http://www.imdb.com/title/' + snapshot.val()[keys[i]].imdb,
                     myRating:  snapshot.val()[keys[i]].myRating || 0,
-                    title:   snapshot.val()[keys[i]].title,
-                    id:      snapshot.val()[keys[i]].id,
-                    poster:  snapshot.val()[keys[i]].poster_120x171,
-                    watched: snapshot.val()[keys[i]].watched || false,
-                    notes:   snapshot.val()[keys[i]].notes || '',
-                    year:    snapshot.val()[keys[i]].release_year,
-                    dbId:    keys[i],
+                    title:     snapshot.val()[keys[i]].title,
+                    id:        snapshot.val()[keys[i]].id,
+                    poster:    snapshot.val()[keys[i]].poster_120x171,
+                    watched:   snapshot.val()[keys[i]].watched || false,
+                    notes:     snapshot.val()[keys[i]].notes || '',
+                    year:      snapshot.val()[keys[i]].release_year,
+                    dbId:      keys[i]
                 });
             }
 
