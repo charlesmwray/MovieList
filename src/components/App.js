@@ -9,6 +9,8 @@ import MovieEdit from './MovieEdit';
 
 import data from '../data/firebase';
 
+
+
 class App extends Component {
 
     constructor(props) {
@@ -19,7 +21,7 @@ class App extends Component {
             query: '',
             queryState: '',
             showSerchResult: false,
-            searchResult: {},
+            searchResults: [],
             editForm: {
                 show: false,
                 id: null,
@@ -38,24 +40,24 @@ class App extends Component {
         }
 
         data.on('value', function(snapshot) {
-          var keys = Object.keys(snapshot.val());
-          var formattedMovies = [];
+            var keys = Object.keys(snapshot.val());
+            var formattedMovies = [];
 
-          for (var i = 0; i < keys.length; i++) {
-            formattedMovies.push({
-                link:    snapshot.val()[keys[i]].url,
-                rating:  snapshot.val()[keys[i]].rating,
-                title:   snapshot.val()[keys[i]].title,
-                id:      snapshot.val()[keys[i]].id,
-                poster:  snapshot.val()[keys[i]].poster === 'N/A' ? null : snapshot.val()[keys[i]].poster,
-                dbId:    keys[i],
-                watched: snapshot.val()[keys[i]].watched,
-                notes:   snapshot.val()[keys[i]].notes,
-                year:    snapshot.val()[keys[i]].year
-            });
-          }
+            for (var i = 0; i < keys.length; i++) {
+                formattedMovies.push({
+                    link:    'http://www.imdb.com/title/' + snapshot.val()[keys[i]].imdb,
+                    myRating:  snapshot.val()[keys[i]].myRating || 0,
+                    title:   snapshot.val()[keys[i]].title,
+                    id:      snapshot.val()[keys[i]].id,
+                    poster:  snapshot.val()[keys[i]].poster_120x171,
+                    watched: snapshot.val()[keys[i]].watched || false,
+                    notes:   snapshot.val()[keys[i]].notes || '',
+                    year:    snapshot.val()[keys[i]].release_year,
+                    dbId:    keys[i],
+                });
+            }
 
-          setMovies(formattedMovies.reverse());
+            setMovies(formattedMovies.reverse());
 
         }, function (errorObject) {
             // TODO: add error state to UI
@@ -72,7 +74,11 @@ class App extends Component {
     searchForMovie(e) {
         e.preventDefault();
 
-        var query = 'https://www.omdbapi.com/?t=' + this.state.query;
+        // var query = 'https://www.omdbapi.com/?s=' + this.state.query;
+        var api = '&api_key=bbd37ad3b028476884a4610e508dd04ef6a00ac5'
+        var base = 'http://api-public.guidebox.com/v2/';
+        var search = base + 'search?type=movie&field=title&query=' + this.state.query;
+        var query = search + api;
 
         this.setState({
             queryState: 'Searching'
@@ -84,41 +90,32 @@ class App extends Component {
             });
         }
 
-        const setSearchResult = (obj) => {
+        const setSearchResults = (result) => {
             this.setState({
-                searchResult: obj,
-                showSerchResult: true
+                searchResults: result,
             });
+            setShowSearchResults(true);
             document.getElementById('add-movie-button').focus();
         }
 
-        $.ajax(query).done(function(p_oXHR, p_sStatus) {
+        const setShowSearchResults = (state) => {
+            this.setState({
+                showSerchResult: state
+            })
+        }
 
-            var result = p_oXHR;
-
-            if (result.Response === "True") {
-
+        $.ajax({
+            url: query,
+            type: "GET",
+        }).done(function(p_oXHR, p_sStatus) {
+            var results = p_oXHR.results;
+            if (p_sStatus === "success" && results.length > 0) {
                 setQueryState('Search complete');
-
-                var saveData = result;
-
-                saveData.id = result.imdbID,
-                saveData.title = result.Title,
-                saveData.rating = 0,
-                saveData.watched = false,
-                saveData.url = 'http://www.imdb.com/title/' + result.imdbID,
-                saveData.poster = result.Poster,
-                saveData.year = result.Year,
-                saveData.notes = '';
-
-                setSearchResult(saveData);
-
+                setSearchResults(results.slice(0,10));
             } else {
-
-                setQueryState('Movie not found.');
-
+                setQueryState('No results returned');
+                setShowSearchResults(false);
             }
-
         }).fail(function(p_oXHR, p_sStatus) {
             const errorMessage = (
                 <div>
@@ -140,7 +137,7 @@ class App extends Component {
         });
         document.getElementById('search-input').value = '';
     }
-    addMovie() {
+    addMovie(id) {
         const setQueryState = (str) => {
             this.setState({
                 queryState: str
@@ -149,7 +146,7 @@ class App extends Component {
         const resetSearch = () => {
             this.resetSearch();
         }
-        const saveData = this.state.searchResult;
+        const saveData = this.state.searchResults[id];
         data.push(saveData, function(error) {
             if (!error) {
                 setQueryState('Saved');
@@ -191,8 +188,7 @@ class App extends Component {
                         {
                             this.state.showSerchResult &&
                             <MovieSearchResult
-                                title={this.state.searchResult.title}
-                                year={this.state.searchResult.year}
+                                searchResults={this.state.searchResults}
                                 addMovie={this.addMovie.bind(this)}
                                 resetSearch={this.resetSearch.bind(this)}
                                 />

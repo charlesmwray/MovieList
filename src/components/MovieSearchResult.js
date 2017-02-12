@@ -1,30 +1,44 @@
 const MovieSearchResult = (props) => {
-    const setQueryString = function(e) {
+    const setQueryString = (e) => {
         props.setQueryString(e.target.value);
     }
-    return (
-        <div className="search-result row">
-            <span className="title col-xs-4">
-                {props.title}
-            </span>
-            <span className="year col-xs-2">
-                {props.year}
-            </span>
-            <div className="button-wrapper col-xs-6">
+    const addMovie = (id) => {
+        props.addMovie(id);
+    }
+    const results = props.searchResults.map( function(result, i) {
+        return (
+            <li className="search-result list-group-item" key={i}>
+                <span className="poster">
+                    <img src={result.poster_120x171} />
+                </span>
+                <span className="title">
+                    {result.title}
+                </span>
+                <span className="year">
+                    {result.release_year}
+                </span>
                 <button
-                    onClick={props.addMovie}
+                    onClick={ () => { addMovie(i) } }
                     id="add-movie-button"
                     aria-labelledby="add-search-result-label"
-                    className="btn"
+                    className="btn add-movie-button"
                 >+</button>
+                <span className="util accessible-text" id="add-search-result-label">Add {result.title}, {result.release_year}</span>
+            </li>
+        )
+    })
+    return (
+        <div className="search-results">
+            <div className="header-wrapper">
+                <h2 className="header">Search results</h2>
                 <button
                     onClick={props.resetSearch}
-                    aria-labelledby="cancel-search-result-label"
                     className="btn"
                 >Cancel</button>
             </div>
-            <span className="util accessible-text" id="add-search-result-label">Add {props.title}, {props.year}</span>
-            <span className="util accessible-text" id="cancel-search-result-label">Cancel {props.title}, {props.year}</span>
+            <ul className="list-group">
+                {results}
+            </ul>
         </div>
     )
 }

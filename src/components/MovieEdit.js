@@ -6,7 +6,7 @@ class MovieEdit extends Component {
         super(props);
 
         this.state = {
-            rating: this.props.details.movie.rating,
+            rating: this.props.details.movie.myRating,
             watched: this.props.details.movie.watched,
             notes: this.props.details.movie.notes,
             toggleEditForm: this.props.toggleEditForm
@@ -19,7 +19,7 @@ class MovieEdit extends Component {
     }
     saveChanges(e, movie) {
         e.preventDefault();
-        data.child(movie.dbId).child('rating').set(e.target.rating.value);
+        data.child(movie.dbId).child('myRating').set(e.target.rating.value);
         data.child(movie.dbId).child('notes').set(e.target.notes.value);
         data.child(movie.dbId).child('watched').set(e.target.watched.checked);
 

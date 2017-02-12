@@ -53,10 +53,6 @@ h1.header-text {
     }
 }
 
-.search-result {
-    margin: 1rem 0;
-}
-
 .movie-list .movie-list-item {
     display: flex;
     .poster {
@@ -111,21 +107,38 @@ h1.header-text {
     }
 }
 
-.search-result {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 4px;
-    .title, .year {
-        font-family: 'Contrail One', sans-serif;
-        font-size: 2rem;
+.search-results {
+    .header-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        >h2 {
+            margin-top: 0;
+            color: #485fde;
+            font-family: 'Contrail One', sans-serif;
+        }
+        >button {
+            height: 100%;
+        }
     }
-    .button-wrapper {
-        text-align: right;
-        > button:first-of-type {
-            margin-right: 1rem;
+    .search-result {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .poster img {
+            width: 60px;
+        }
+        .title {
+            flex-grow: 1;
+        }
+        .title, .year {
+            margin: 0 1rem;
+            font-family: 'Contrail One', sans-serif;
+            font-size: 2rem;
+        }
+        .add-movie-button {
+            height: 100%;
         }
     }
 }
