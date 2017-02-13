@@ -1,24 +1,15 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router';
-import { version } from '../../package.json';
-
+import React, { Component } from 'react';
 import MovieList from './MovieList.js';
 import MovieSearch from './MovieSearch.js';
 import MovieSearchResult from './MovieSearchResult';
 import MovieEdit from './MovieEdit';
-
 import data from '../data/firebase';
 
-
-
 class App extends Component {
-
     constructor(props) {
         super(props);
-
         this.state = {
             movies: [{title:'Loading'}],
-            query: '',
             queryState: '',
             showSerchResult: false,
             searchResults: [],
@@ -28,7 +19,6 @@ class App extends Component {
                 movie: {}
             }
         }
-
     }
 
     componentDidMount() {
@@ -53,6 +43,9 @@ class App extends Component {
                     watched:   snapshot.val()[keys[i]].watched || false,
                     notes:     snapshot.val()[keys[i]].notes || '',
                     year:      snapshot.val()[keys[i]].release_year,
+                    cacheTime: snapshot.val()[keys[i]].cacheTime,
+                    subscription_web_sources: snapshot.val()[keys[i]].subscription_web_sources,
+                    free_web_sources: snapshot.val()[keys[i]].free_web_sources,
                     dbId:      keys[i]
                 });
             }
@@ -66,23 +59,13 @@ class App extends Component {
         });
 
     }
-    setQueryString(str) {
-        this.setState({
-            query: str
-        })
-    }
     searchForMovie(e) {
         e.preventDefault();
 
-        // var query = 'https://www.omdbapi.com/?s=' + this.state.query;
         var api = '&api_key=bbd37ad3b028476884a4610e508dd04ef6a00ac5'
         var base = 'http://api-public.guidebox.com/v2/';
-        var search = base + 'search?type=movie&field=title&query=' + this.state.query;
+        var search = base + 'search?type=movie&field=title&query=' + e.target.searchInput.value;
         var query = search + api;
-
-        this.setState({
-            queryState: 'Searching'
-        })
 
         const setQueryState = (str) => {
             this.setState({
@@ -103,6 +86,8 @@ class App extends Component {
                 showSerchResult: state
             })
         }
+
+        setQueryState('Searching');
 
         $.ajax({
             url: query,
@@ -130,12 +115,11 @@ class App extends Component {
     }
     resetSearch() {
         this.setState({
-            query: '',
             queryState: '',
             showSerchResult: false,
             searchResult: {},
         });
-        document.getElementById('search-input').value = '';
+        document.getElementById('searchInput').value = '';
     }
     addMovie(id) {
         const setQueryState = (str) => {
@@ -147,13 +131,33 @@ class App extends Component {
             this.resetSearch();
         }
         const saveData = this.state.searchResults[id];
-        data.push(saveData, function(error) {
-            if (!error) {
-                setQueryState('Saved');
-                resetSearch();
-            } else {
-                setQueryState('Save error.');
+
+        const base = 'http://api-public.guidebox.com/v2/movies/';
+        const api = '?api_key=bbd37ad3b028476884a4610e508dd04ef6a00ac5'
+        const query = base + this.state.searchResults[id].id + api;
+
+        $.ajax({
+            url: query,
+            type: "GET",
+        }).done(function(details, p_sStatus) {
+            if (details.subscription_web_sources.length > 0) {
+                saveData.subscription_web_sources = details.subscription_web_sources;
             }
+            if (details.free_web_sources.length > 0) {
+                saveData.free_web_sources = details.free_web_sources;
+            }
+
+            data.push(saveData, function(error) {
+                if (!error) {
+                    setQueryState('Saved');
+                    resetSearch();
+                } else {
+                    setQueryState('Save error.');
+                }
+            });
+
+        }).fail(function(p_oXHR, p_sStatus) {
+            console.log(p_oXHR, p_sStatus);
         });
     }
     toggleEditForm(movie) {
@@ -180,9 +184,7 @@ class App extends Component {
                             <h1 className="header-text visible-xs-*">Movie List</h1>
                             <MovieSearch
                                 status={this.state.queryState}
-                                query={this.state.query}
                                 searchForMovie={this.searchForMovie.bind(this)}
-                                setQueryString={this.setQueryString.bind(this)}
                                 />
                         </header>
                         {
@@ -193,7 +195,10 @@ class App extends Component {
                                 resetSearch={this.resetSearch.bind(this)}
                                 />
                         }
-                        <MovieList movies={this.state.movies} toggleEditForm={this.toggleEditForm.bind(this)} />
+                        <MovieList
+                            movies={this.state.movies}
+                            toggleEditForm={this.toggleEditForm.bind(this)}
+                        />
                     </div>
                 </div>
             </div>

@@ -64,13 +64,18 @@ h1.header-text {
             height: 9rem;
         }
         .year {
-            margin-top: .5rem;
+            padding: .125rem;
             font-size: 1.25rem;
             line-height: 1;
+            background-color: #222;
+            color: white;
         }
     }
     .metadata-wrapper {
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
         a.title,
         a.title:hover,
         a.title:active {
@@ -80,7 +85,34 @@ h1.header-text {
             text-decoration: none;
         }
         .notes {
-            font-size: 1rem;
+            font-size: 1.35rem;
+        }
+        .streaming-options {
+            margin-top: auto;
+            .streaming-link {
+                display: flex;
+                
+                &:before {
+                    content: '';
+                    height: 30px;
+                    width: 30px;
+                    display: inline-block;
+                    background-size: 30px auto;
+                    background-repeat: no-repeat;
+                }
+                &.hulu_plus:before {
+                    background-image: url(http://media.idownloadblog.com/wp-content/uploads/2014/10/hulu-plus-1.png);
+                }
+                &.amazon_prime:before {
+                    background-image: url(http://is4.mzstatic.com/image/pf/us/r30/Purple1/v4/a8/40/79/a84079a1-eaa0-2319-3cf9-4fc63a26edf0/pr_source.png);
+                }
+                &.netflix:before {
+                    background-image: url(https://is5-ssl.mzstatic.com/image/thumb/Purple122/v4/04/d9/61/04d96166-1388-5664-18eb-8882d8a96e77/source/256x256bb.jpg);
+                }
+                &.starz_amazon_prime:before {
+                    background-image: url(https://logo.clearbit.com/starz.com);
+                }
+            }
         }
     }
     .action-wrapper {

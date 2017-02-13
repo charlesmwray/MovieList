@@ -24,32 +24,57 @@ const MovieList = (props) => {
                 const api = '?api_key=bbd37ad3b028476884a4610e508dd04ef6a00ac5'
                 const query = base + movie.id + api;
 
-                var details = 'd';
-
-                const setStreamingItems= (streamingObj) => {
+                const setStreamingItems = (streamingObj) => {
                     this.setState({
                         webStreamingItems: streamingObj
                     })
                 }
 
-                $.ajax({
-                    url: query,
-                    type: "GET",
-                }).done(function(p_oXHR, p_sStatus) {
-                    details = p_oXHR;
-                    console.log(details);
-                    if (details.subscription_web_sources.length > 0) {
-                        setStreamingItems(details.subscription_web_sources);
-                    }
-                }).fail(function(p_oXHR, p_sStatus) {
-                    // console.log(p_oXHR, p_sStatus);
-                });
+                const getStreamingOptions = () => {
+                    $.ajax({
+                        url: query,
+                        type: "GET",
+                    }).done(function(details, p_sStatus) {
+                        var items = [];
+                        if (details.subscription_web_sources.length > 0) {
+                            items.push(details.subscription_web_sources);
+
+                            movie.dbId && data.child(movie.dbId).child('subscription_web_sources').set(details.subscription_web_sources);
+                        }
+                        if (details.free_web_sources.length > 0) {
+                            items.push(details.free_web_sources);
+                            data.child(movie.dbId).child('free_web_sources').set(details.free_web_sources);
+                        }
+                        setStreamingItems(items)
+
+                    }).fail(function(p_oXHR, p_sStatus) {
+                        console.log(p_oXHR, p_sStatus);
+                    });
+                }
+                const cacheTime = movie.cacheTime || 0;
+                if ( Math.round( new Date().getTime() / 1000) - cacheTime > 604800 ) {
+                    getStreamingOptions();
+                } else {
+                    var items = [];
+                    movie.subscription_web_sources && items.push(movie.subscription_web_sources);
+
+                    setStreamingItems(items)
+                }
             }
             render() {
-                const streamingItem = this.state.webStreamingItems.map( (item) => {
-                    return <a href={item.link}>{item.display_name}</a>;
+                const WebStreamingItems = this.state.webStreamingItems.map( (item, i) => {
+                    return (
+                        <a
+                            key={i}
+                            className={ 'streaming-link ' + item[i].source }
+                            href={item[i].link}>
+                            <span className="util accessible-text">
+                                Watch on {item[i].display_name}
+                            </span>
+                        </a>
+                    )
                 });
-                return <div>{streamingItem}</div>;
+                return <div>{WebStreamingItems}</div>;
             }
         }
         return (
@@ -63,7 +88,9 @@ const MovieList = (props) => {
                         {movie.title}
                     </a>
                     <div className="notes">{movie.notes}</div>
-                    <StreamingItem />
+                    <div className="streaming-options">
+                        <StreamingItem />
+                    </div>
                 </div>
                 <div className="action-wrapper">
                     Rating: {movie.myRating} { movie.watched && <span className="watched">Watched</span> }

@@ -1,7 +1,4 @@
 const MovieSearch = (props) => {
-    const setQueryString = function(e) {
-        props.setQueryString(e.target.value);
-    }
     const searchForMovie = function(e) {
         props.searchForMovie(e);
     }
@@ -12,8 +9,7 @@ const MovieSearch = (props) => {
                 <input
                     className="search-input"
                     type="text"
-                    id="search-input"
-                    onKeyUp={e => setQueryString(e)}
+                    id="searchInput"
                     autoComplete="off"
                 />
                 <button className="btn" type="submit">Search</button>
